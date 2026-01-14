@@ -5,7 +5,8 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { Platform } from './video-parser'
 
-const TEMP_DIR = path.join(process.cwd(), 'tmp')
+// Vercel 等 Serverless 环境只有 /tmp 可写
+const TEMP_DIR = process.env.VERCEL ? '/tmp' : path.join(process.cwd(), 'tmp')
 
 export async function ensureTempDir() {
   try {

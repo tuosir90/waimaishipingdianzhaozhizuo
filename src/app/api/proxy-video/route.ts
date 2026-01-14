@@ -5,7 +5,8 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import crypto from 'crypto'
 
-const TEMP_DIR = path.join(process.cwd(), 'tmp')
+// Vercel 等 Serverless 环境只有 /tmp 可写
+const TEMP_DIR = process.env.VERCEL ? '/tmp' : path.join(process.cwd(), 'tmp')
 
 // 缓存映射：URL hash -> 文件路径
 const videoCache = new Map<string, { filePath: string; downloading: Promise<void> | null }>()
